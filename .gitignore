@@ -1,0 +1,10 @@
+venv/
+.env
+.tox
+.idea
+.local
+dist
+.coverage
+junit.xml
+config/config.yml
+config/config_env.yml
