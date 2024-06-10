@@ -1,11 +1,15 @@
+from collections import deque
 from abc import ABC, abstractmethod
-
+from typing import TypeVar
 from core.games.abstract.rule import AbstractRule
 from core.player.abstract.player import AbstractPlayer
 
 
+Players = TypeVar(name="Players", bound=[list[AbstractPlayer | None], deque[AbstractPlayer | None]])
+
+
 class AbstractState(ABC):
-    _players: list[AbstractPlayer | None]
+    _players: Players
     rule: AbstractRule
 
     def __init__(self, rule: AbstractRule):
@@ -21,10 +25,10 @@ class AbstractState(ABC):
     def players(self):
         return self._players
 
-    @property
-    @abstractmethod
-    def next_player(self) -> AbstractPlayer:
-        raise NotImplemented
+    # @property
+    # @abstractmethod
+    # def next_player(self) -> AbstractPlayer:
+    #     raise NotImplemented
 
     def start(self):
         self.rule.setup(self.players)

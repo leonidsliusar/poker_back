@@ -11,11 +11,23 @@ class DurakStateEnum(str, Enum):
     D: str = "Defend"
 
 
-class State(AbstractState):
+class DurakState(AbstractState):
     rule: DurakRule
+    _current_board: list[AbstractCard | None]
     _current: DurakStateEnum = DurakStateEnum.A
 
+    def __init__(self, rule: DurakRule):
+        super().__init__(rule=rule)
+        self._current_board = []
+
+    def push_to_current_board(self, card: AbstractCard):
+        self._current_board.append(card)
+
+    def clear_current_board(self):
+        self._current_board.clear()
+
     def turn(self, card: AbstractCard):
+        self.push_to_current_board(card)
         match self.current:
             case DurakStateEnum.A:
                 card = self.rule.attack(card, self.next_player)
@@ -23,6 +35,9 @@ class State(AbstractState):
                 card = self.rule.defend(card, self.next_player)
         self.switch_current_state()
         return card
+
+    def end_turn(self):
+        self.clear_current_board()
 
     @property
     def next_player(self) -> AbstractPlayer:

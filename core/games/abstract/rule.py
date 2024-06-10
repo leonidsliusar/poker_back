@@ -11,16 +11,10 @@ class AbstractRule(ABC):
     def __init__(self, deck: AbstractDeck):
         self.deck = deck
 
-    @property
-    @abstractmethod
-    def turn_of_player(self) -> tuple[AbstractPlayer, AbstractCard]:
-        raise NotImplemented
-
-    @turn_of_player.setter
-    @abstractmethod
-    def turn_of_player(self, data: tuple[AbstractPlayer, AbstractCard]):
-        raise NotImplemented
+    def reload_deck(self):
+        reloaded_deck = self.deck.__init__()
+        self.deck = reloaded_deck
 
     @abstractmethod
-    def setup(self, players: list[AbstractPlayer]):
+    def setup(self, players: list[AbstractPlayer], *args, **kwargs):
         raise NotImplemented

@@ -1,13 +1,13 @@
 from core.deck.deck import ShortDeck
 from core.games.durak.rule import DurakRule
 from core.player.player import Player
-from core.state.state import State
+from core.state.durakstate import DurakState
 
 
 def test_state():
     deck = ShortDeck()
     rule = DurakRule(deck)
-    state = State(rule)
+    state = DurakState(rule)
     player_1 = Player(address="test_1")
     player_2 = Player(address="test_2")
     state.add_player(player_1)
