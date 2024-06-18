@@ -6,11 +6,17 @@ authors = ["leonidsliusar <loslyusar@gmail.com>"]
 readme = "README.md"
 packages = [{include = "poker_core"}]
 
+[tool.poetry.scripts]
+server = "core.server:main"
+
 [tool.poetry.dependencies]
 python = "^3.11"
 websockets = "^12.0"
 uvloop = "^0.19.0"
 pydantic = "^2.7.3"
+fastapi = "^0.111.0"
+taskipy = "^1.13.0"
+dependency-injector = "^4.41.0"
 
 
 [tool.poetry.group.test.dependencies]
@@ -19,3 +25,7 @@ pytest = "^8.2.2"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.taskipy.tasks]
+app-dev = { cmd = "poetry run server --log-level warning", help = "Start ws server" }

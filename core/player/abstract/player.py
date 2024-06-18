@@ -1,5 +1,4 @@
 from abc import ABC
-
 from core.cards.abstract.card import AbstractCard
 
 
