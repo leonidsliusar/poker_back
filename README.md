@@ -131,3 +131,10 @@ websocat ws://localhost:8000/holdem
     }
 }
 ```
+
+* После всего круга ставок - перевод на следующий этап
+```bash
+{
+  "command": "complete_turn"
+}
+```
