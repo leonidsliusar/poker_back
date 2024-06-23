@@ -1,7 +1,7 @@
-from core.deck.deck import ShortDeck
-from core.games.durak.rule import DurakRule
-from core.player.player import Player
-from core.state.durakstate import DurakState
+from src.core.deck.deck import ShortDeck
+from src.core.games.durak.rule import DurakRule
+from src.core.player.player import Player
+from src.core.state.durakstate import DurakState
 
 
 def test_state():

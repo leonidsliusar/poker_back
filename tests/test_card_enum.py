@@ -1,4 +1,4 @@
-from core.cards.card_enum import SuitEnum, HigherRankEnum
+from src.core.cards import SuitEnum, HigherRankEnum
 
 
 def test_suit_enum():

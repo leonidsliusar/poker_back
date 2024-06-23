@@ -4,10 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["leonidsliusar <loslyusar@gmail.com>"]
 readme = "README.md"
-packages = [{include = "poker_core"}]
+packages = [{include = "src"}]
 
 [tool.poetry.scripts]
-server = "core.server:main"
+server = "src.server:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -28,4 +28,4 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.taskipy.tasks]
-app-dev = { cmd = "poetry run server --log-level warning", help = "Start ws server" }
+dev = { cmd = "server --log-level warning", help = "Start ws server" }

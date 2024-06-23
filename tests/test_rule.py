@@ -1,7 +1,7 @@
 import pytest
 
-from core.cards.card import Card
-from core.cards.card_enum import SuitEnum
+from src.core.cards import Card
+from src.core.cards import SuitEnum
 from core.deck.deck import ShortDeck
 from core.games.durak.rule import DurakRule
 from core.player.player import Player
