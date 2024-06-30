@@ -2,9 +2,9 @@ import copy
 
 import pytest
 
-from src.core.cards import Card
-from src.core.cards import SuitEnum
-from core.deck.deck import LongDeck, ShortDeck
+from src.core.cards.card import Card
+from src.core.cards.card_enum import SuitEnum
+from src.core.deck.deck import LongDeck, ShortDeck
 
 
 @pytest.mark.parametrize("start_rank, deck_class", [(2, LongDeck), (6, ShortDeck)])

@@ -2,6 +2,7 @@ from contextlib import contextmanager
 
 from src.core.cards.abstract.card import AbstractCard
 from src.core.models.models import HoldemStageEnum, Response, WinnerResponse, ActionEnum
+from src.core.player.abstract.player import AbstractPlayer
 from src.core.player.payable_player import PayablePlayer
 from src.core.state.abstract.state import AbstractState
 from src.core.games.texas_holdem.rule import HoldEmPokerRule
@@ -137,14 +138,16 @@ class HoldemState(AbstractState):
         Getting winners, moving players from out, clearing current_board and hands, sorting players, overloading deck
         and starting dealing.
         """
-        # TODO: Add implementation of getting winner/s by combination
-        winners = []
+        winners = self._get_winners()
         self._move_player_from_out()
         self._clear_board()
         self._clear_hands()
         self._sort_players()
         self.rule.reload_deck()
         return WinnerResponse(players=winners)
+
+    def _get_winners(self) -> list[PayablePlayer]:
+        return self.rule.get_winners(list(self.players), self._current_board)
 
     def _move_player_from_out(self):
         for player in self._out_players:

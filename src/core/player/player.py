@@ -1,4 +1,4 @@
-from core.player.abstract.player import AbstractPlayer
+from src.core.player.abstract.player import AbstractPlayer
 
 
 class Player(AbstractPlayer):

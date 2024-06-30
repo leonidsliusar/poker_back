@@ -1,9 +1,9 @@
 from enum import Enum
 
-from src.core.cards import AbstractCard
-from core.games.durak.rule import DurakRule
-from core.player.abstract.player import AbstractPlayer
-from core.state.abstract.state import AbstractState
+from src.core.cards.abstract.card import AbstractCard
+from src.core.games.durak.rule import DurakRule
+from src.core.player.abstract.player import AbstractPlayer
+from src.core.state.abstract.state import AbstractState
 
 
 class DurakStateEnum(str, Enum):

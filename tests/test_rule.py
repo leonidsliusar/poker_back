@@ -1,10 +1,11 @@
 import pytest
 
-from src.core.cards import Card
-from src.core.cards import SuitEnum
-from core.deck.deck import ShortDeck
-from core.games.durak.rule import DurakRule
-from core.player.player import Player
+from src.core.cards.card import Card
+from src.core.cards.card_enum import SuitEnum
+from src.core.deck.deck import ShortDeck
+from src.core.games.durak.rule import DurakRule
+from src.core.games.texas_holdem.rule import HoldEmPokerRule
+from src.core.player.player import Player
 
 
 def test_durak_rule():
@@ -66,3 +67,212 @@ def test_durak_rule_defend():
     rule.defend(defend_card, attacker)
 
 
+@pytest.mark.parametrize("hand, board, expected", [
+    (
+            [
+                {"rank": 10, "suit": SuitEnum.D},
+                {"rank": 13, "suit": SuitEnum.H}
+            ],
+            [
+                {"rank": 2, "suit": SuitEnum.H},
+                {"rank": 11, "suit": SuitEnum.H},
+                {"rank": 6, "suit": SuitEnum.S},
+                {"rank": 13, "suit": SuitEnum.D},
+                {"rank": 5, "suit": SuitEnum.C}
+            ],
+            [
+                {"rank": 13, "suit": SuitEnum.H},
+                {"rank": 13, "suit": SuitEnum.D}
+            ]
+    ),
+    (
+            [
+                {"rank": 5, "suit": SuitEnum.D},
+                {"rank": 13, "suit": SuitEnum.H}
+            ],
+            [
+                {"rank": 2, "suit": SuitEnum.H},
+                {"rank": 11, "suit": SuitEnum.H},
+                {"rank": 14, "suit": SuitEnum.S},
+                {"rank": 13, "suit": SuitEnum.C},
+                {"rank": 5, "suit": SuitEnum.C}
+            ],
+            [
+                {"rank": 5, "suit": SuitEnum.D},
+                {"rank": 13, "suit": SuitEnum.H},
+                {"rank": 13, "suit": SuitEnum.C},
+                {"rank": 5, "suit": SuitEnum.C}
+            ],
+    ),
+    (
+            [
+                {"rank": 10, "suit": SuitEnum.D},
+                {"rank": 13, "suit": SuitEnum.H}
+            ],
+            [
+                {"rank": 10, "suit": SuitEnum.H},
+                {"rank": 11, "suit": SuitEnum.H},
+                {"rank": 6, "suit": SuitEnum.S},
+                {"rank": 13, "suit": SuitEnum.D},
+                {"rank": 6, "suit": SuitEnum.C}
+            ],
+            [
+                {"rank": 10, "suit": SuitEnum.D},
+                {"rank": 13, "suit": SuitEnum.H},
+                {"rank": 10, "suit": SuitEnum.H},
+                {"rank": 13, "suit": SuitEnum.D},
+            ]
+    ),
+    (
+            [
+                {"rank": 10, "suit": SuitEnum.D},
+                {"rank": 6, "suit": SuitEnum.H}
+            ],
+            [
+                {"rank": 10, "suit": SuitEnum.H},
+                {"rank": 11, "suit": SuitEnum.H},
+                {"rank": 6, "suit": SuitEnum.S},
+                {"rank": 13, "suit": SuitEnum.H},
+                {"rank": 6, "suit": SuitEnum.C}
+            ],
+            [
+                {"rank": 10, "suit": SuitEnum.D},
+                {"rank": 6, "suit": SuitEnum.H},
+                {"rank": 10, "suit": SuitEnum.H},
+                {"rank": 6, "suit": SuitEnum.S},
+                {"rank": 6, "suit": SuitEnum.C}
+
+            ]
+    ),
+    (
+            [
+                {"rank": 10, "suit": SuitEnum.D},
+                {"rank": 10, "suit": SuitEnum.C}
+            ],
+            [
+                {"rank": 10, "suit": SuitEnum.H},
+                {"rank": 10, "suit": SuitEnum.S},
+                {"rank": 6, "suit": SuitEnum.S},
+                {"rank": 13, "suit": SuitEnum.H},
+                {"rank": 6, "suit": SuitEnum.C}
+            ],
+            [
+                {"rank": 10, "suit": SuitEnum.D},
+                {"rank": 10, "suit": SuitEnum.C},
+                {"rank": 10, "suit": SuitEnum.H},
+                {"rank": 10, "suit": SuitEnum.S},
+            ]
+    ),
+    (
+            [
+                {"rank": 2, "suit": SuitEnum.D},
+                {"rank": 3, "suit": SuitEnum.C}
+            ],
+            [
+                {"rank": 4, "suit": SuitEnum.H},
+                {"rank": 5, "suit": SuitEnum.S},
+                {"rank": 6, "suit": SuitEnum.S},
+                {"rank": 13, "suit": SuitEnum.H},
+                {"rank": 7, "suit": SuitEnum.C}
+            ],
+            []
+    )
+])
+def test_get_combo_by_set(hand, board, expected):
+    deck = ShortDeck()
+    rule = HoldEmPokerRule(deck)
+    hand = [Card(**data) for data in hand]
+    board = [Card(**data) for data in board]
+    assert rule._get_combo_by_set_combo(hand, board) == [Card(**data) for data in expected]
+
+
+@pytest.mark.parametrize("hand, board, expected, params", [
+    (
+            [
+                {"rank": 10, "suit": SuitEnum.H},
+                {"rank": 13, "suit": SuitEnum.H}
+            ],
+            [
+                {"rank": 9, "suit": SuitEnum.H},
+                {"rank": 11, "suit": SuitEnum.H},
+                {"rank": 6, "suit": SuitEnum.S},
+                {"rank": 12, "suit": SuitEnum.H},
+                {"rank": 5, "suit": SuitEnum.C}
+            ],
+            [
+                {"rank": 9, "suit": SuitEnum.H},
+                {"rank": 10, "suit": SuitEnum.H},
+                {"rank": 11, "suit": SuitEnum.H},
+                {"rank": 12, "suit": SuitEnum.H},
+                {"rank": 13, "suit": SuitEnum.H}
+            ],
+            {"flash": 1, "royal": 1, "straight": 1}
+    ),
+    (
+            [
+                {"rank": 10, "suit": SuitEnum.D},
+                {"rank": 13, "suit": SuitEnum.H}
+            ],
+            [
+                {"rank": 9, "suit": SuitEnum.H},
+                {"rank": 11, "suit": SuitEnum.H},
+                {"rank": 6, "suit": SuitEnum.S},
+                {"rank": 12, "suit": SuitEnum.D},
+                {"rank": 5, "suit": SuitEnum.C}
+            ],
+            [
+                {"rank": 9, "suit": SuitEnum.H},
+                {"rank": 10, "suit": SuitEnum.D},
+                {"rank": 11, "suit": SuitEnum.H},
+                {"rank": 12, "suit": SuitEnum.D},
+                {"rank": 13, "suit": SuitEnum.H}
+            ],
+            {"flash": 0, "royal": 0, "straight": 1}
+    ),
+    (
+            [
+                {"rank": 14, "suit": SuitEnum.D},
+                {"rank": 2, "suit": SuitEnum.H}
+            ],
+            [
+                {"rank": 3, "suit": SuitEnum.H},
+                {"rank": 4, "suit": SuitEnum.H},
+                {"rank": 5, "suit": SuitEnum.S},
+                {"rank": 12, "suit": SuitEnum.D},
+                {"rank": 5, "suit": SuitEnum.C}
+            ],
+            [
+                {"rank": 14, "suit": SuitEnum.D},
+                {"rank": 2, "suit": SuitEnum.H},
+                {"rank": 3, "suit": SuitEnum.H},
+                {"rank": 4, "suit": SuitEnum.H},
+                {"rank": 5, "suit": SuitEnum.S}
+            ],
+            {"flash": 0, "royal": 0, "straight": 1}
+    ),
+    (
+            [
+                {"rank": 2, "suit": SuitEnum.D},
+                {"rank": 13, "suit": SuitEnum.H}
+            ],
+            [
+                {"rank": 9, "suit": SuitEnum.H},
+                {"rank": 11, "suit": SuitEnum.H},
+                {"rank": 6, "suit": SuitEnum.S},
+                {"rank": 12, "suit": SuitEnum.D},
+                {"rank": 5, "suit": SuitEnum.C}
+            ],
+            None,
+            None
+    ),
+
+])
+def test_get_combo_by_sequence(hand, board, expected, params):
+    deck = ShortDeck()
+    rule = HoldEmPokerRule(deck)
+    hand = [Card(**data) for data in hand]
+    board = [Card(**data) for data in board]
+    if expected:
+        assert rule._get_combo_by_sequence(hand, board) == {"combo": [Card(**data) for data in expected], **params}
+    else:
+        assert not rule._get_combo_by_sequence(hand, board)

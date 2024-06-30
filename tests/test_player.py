@@ -1,6 +1,6 @@
-from src.core.cards import Card
-from src.core.cards import SuitEnum
-from core.player.player import Player
+from src.core.cards.card import Card
+from src.core.cards.card_enum import SuitEnum
+from src.core.player.player import Player
 
 
 def test_player():

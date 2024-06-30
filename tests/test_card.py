@@ -1,5 +1,5 @@
-from src.core.cards import Card
-from src.core.cards import SuitEnum
+from src.core.cards.card import Card
+from src.core.cards.card_enum import SuitEnum
 
 
 def test_card():

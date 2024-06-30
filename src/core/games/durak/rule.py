@@ -1,8 +1,8 @@
 """core.games.durak.rule."""
-from src.core.cards import AbstractCard
-from core.deck.abstract.deck import AbstractDeck
-from core.games.abstract.rule import AbstractRule
-from core.player.abstract.player import AbstractPlayer
+from src.core.cards.abstract.card import AbstractCard
+from src.core.deck.abstract.deck import AbstractDeck
+from src.core.games.abstract.rule import AbstractRule
+from src.core.player.abstract.player import AbstractPlayer
 
 
 class DurakRule(AbstractRule):
