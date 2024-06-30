@@ -14,6 +14,7 @@ app._state = container
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "*",
 ]
 
 app.add_middleware(
@@ -29,7 +30,7 @@ def main() -> None:
     """."""
     uvicorn.run(
         f"{__name__}:app",
-        host="localhost",
+        host="0.0.0.0",
         port=8000,
         reload=True,
     )

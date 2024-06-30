@@ -5,6 +5,19 @@
 poetry install
 poetry run task dev
 ```
+Docker:
+```shell
+docker build -t app .
+docker run -d -p 8000:8000 app
+```
+
+Подключенние к сокету:
+ws://localhost:8000/holdem
+Например:
+```bash
+websocat ws://localhost:8000/holdem
+```
+
 2. Формат обмена данными - JSON.
 3. В модуле src.core.models.models модель запросов: 
 
@@ -81,16 +94,7 @@ class WinnerResponse(BaseModel):
     players: list[PayablePlayerModel] - возвращает массив победителей - метод у State еще не реализован
 ```
 
-4. Подключенние к сокету:
-
-    ws://localhost:8000/holdem
-
-    Например:
-```bash
-websocat ws://localhost:8000/holdem
-```
-
-5. Типичная схема взаимодействия с сервером:
+4. Типичная схема взаимодействия с сервером:
 
 * Подключение игрока
 ```bash
